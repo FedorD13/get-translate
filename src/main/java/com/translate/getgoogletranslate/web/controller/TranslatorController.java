@@ -1,5 +1,8 @@
 package com.translate.getgoogletranslate.web.controller;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.translate.getgoogletranslate.domain.Word;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +20,16 @@ public class TranslatorController {
 
     @GetMapping("/{word}")
     public ResponseEntity<?> getWord(@PathVariable String word) {
-        Word wordOutput = new Word(word);
-        return new ResponseEntity<Word>(wordOutput, HttpStatus.OK);
+
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
+
+        Translation translation = translate.translate(
+                word,
+                Translate.TranslateOption.sourceLanguage("en"),
+                Translate.TranslateOption.targetLanguage("ru"));
+
+        Word outputWord = new Word(translation.getTranslatedText());
+        return new ResponseEntity<Word>(outputWord, HttpStatus.OK);
     }
 
 }
