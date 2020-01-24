@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LanguageEnumTest {
 
-    String en = LanguageEnum.Constants.getEN();
-    String ru = LanguageEnum.Constants.getRU();
-    List<String> invalidLanguages = List.of(
+    final String en = LanguageEnum.Constants.getEN();
+    final String ru = LanguageEnum.Constants.getRU();
+    final List<String> invalidLanguages = List.of(
             "jp",
             "vn",
             "ab",
@@ -21,7 +21,7 @@ class LanguageEnumTest {
             RandomStringUtils.randomAlphanumeric(5),
             RandomStringUtils.randomAlphanumeric(5)
     );
-    List<String> exceptionsLanguages = List.of(
+    final List<String> exceptionsLanguages = List.of(
             " "
     );
 
@@ -36,16 +36,14 @@ class LanguageEnumTest {
     @DisplayName("Are invalid languages are okay")
     @Test
     void givenIsValidLanguageMethod_whenUseInvalidLanguages_thenFalse() {
-        invalidLanguages.stream().forEach(language -> assertFalse(LanguageEnum.isValidLanguage(language)));
+        invalidLanguages.forEach(language -> assertFalse(LanguageEnum.isValidLanguage(language)));
     }
 
     @DisplayName("Exception Testing")
     @Test
     void shouldThrowException() {
         assertThrows(IllegalArgumentException.class, () ->
-        {
-            LanguageEnum.isValidLanguage(exceptionsLanguages.get(0));
-        });
+                LanguageEnum.isValidLanguage(exceptionsLanguages.get(0)));
     }
 
 }

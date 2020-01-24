@@ -20,14 +20,12 @@ public class SwaggerConfig {
 
     @Bean
     public Docket apiDocket() {
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.translate.getgoogletranslate.web.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiEndPointInfo());
-
-        return docket;
     }
 
     private ApiInfo apiEndPointInfo(){
