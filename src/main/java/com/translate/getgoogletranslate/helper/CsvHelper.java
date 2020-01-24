@@ -26,16 +26,17 @@ public class CsvHelper {
         return new CSVParser(reader, format);
     }
 
-    public static List<String> getHeader(CSVParser csvParser) {
+    private static List<String> getHeader(CSVParser csvParser) {
         return csvParser.getHeaderNames();
     }
 
-    public static String getLanguage(List<String> header) {
-        return header.stream().findFirst().get();
+    public static String getSourceLanguage(CSVParser csvParser) {
+        var header = getHeader(csvParser);
+        return header.stream().findFirst().get().toLowerCase();
     }
 
-    public static List<String> getWords(CSVParser csvParser, String language) throws IOException {
-        return csvParser.getRecords().stream().map(record -> record.get(language))
+    public static List<String> getWords(CSVParser csvParser, String sourceLanguage) throws IOException {
+        return csvParser.getRecords().stream().map(record -> record.get(sourceLanguage))
                 .collect(Collectors.toList());
     }
 }
