@@ -4,6 +4,7 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.translate.getgoogletranslate.domain.TranslationSet;
 import com.translate.getgoogletranslate.helper.CsvHelper;
 import enums.LanguageEnum;
+import org.apache.commons.csv.CSVParser;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class TranslatorService {
 
-    public TranslationSet getTranslationSet(String fileName, MultipartFile file) throws IOException, InvalidArgumentException {
+    public TranslationSet getTranslationSet(String fileName, MultipartFile file) throws IOException {
         String sourceLanguage;
         String targetLanguage;
         List<String> wordsList;
@@ -41,6 +42,6 @@ public class TranslatorService {
     }
 
     private String getTargetLanguage(String sourceLanguage) {
-        return sourceLanguage.equals(LanguageEnum.EN) ? LanguageEnum.RU.getLanguage() : LanguageEnum.EN.getLanguage();
+        return sourceLanguage.equals(LanguageEnum.EN.getLanguage()) ? LanguageEnum.RU.getLanguage() : LanguageEnum.EN.getLanguage();
     }
 }
